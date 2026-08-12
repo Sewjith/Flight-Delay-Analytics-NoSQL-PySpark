@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Flight Delay Analytics — A next-gen PySpark dashboard showcasing ML models, delay patterns, and airline data insights from 18.5M+ flights.">
+  <title>Flight Delay Analytics — PySpark Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.164.1/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <nav class="topbar" id="navbar">
+        <div class="brand">✈ Flight Delay Analytics</div>
+        <div class="nav-links">
+          <a href="#summary">Summary</a>
+          <a href="#visuals">Visuals</a>
+          <a href="#ml">Models</a>
+          <a href="#outputs">Outputs</a>
+        </div>
+      </nav>
+
+      <!-- 3D Plane Background -->
+      <div id="plane-3d-container" class="plane-3d-bg">
+        <div id="plane-loader" class="plane-loader">
+          <div class="plane-loader-spinner"></div>
+          <p>Loading 3D Model...</p>
+        </div>
+      </div>
+
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">PySpark project showcase</p>
+          <h1>One web front end for the notebook outputs, charts, and model results.</h1>
+          <p id="hero-subtitle" class="hero-subtitle"></p>
+          <div id="stack-list" class="stack-list"></div>
+        </div>
+
+        <div class="hero-panel">
+          <p class="panel-label">Project scope</p>
+          <div id="hero-metrics" class="hero-metrics"></div>
+          <p class="panel-footnote">Built from the exported Databricks notebook outputs and chart artifacts, without publishing the raw notebook export.</p>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section id="summary" class="section animate-on-scroll">
+        <div class="section-heading">
+          <p class="eyebrow">Executive Summary</p>
+          <h2>Key numbers from the combined flight analysis</h2>
+        </div>
+        <div id="overall-cards" class="metric-grid"></div>
+        <div class="split-grid">
+          <article class="card">
+            <div class="card-header">
+              <h3>Yearly performance</h3>
+              <p>Flights, delay rates, and cancellation behaviour by year.</p>
+            </div>
+            <div class="table-scroll">
+              <table id="yearly-table"></table>
+            </div>
+          </article>
+
+          <article class="card accent-card">
+            <div class="card-header">
+              <h3>Outcome mix</h3>
+              <p>Operational outcome ratios from the extracted notebook results.</p>
+            </div>
+            <div id="outcome-breakdown" class="stat-list"></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="visuals" class="section animate-on-scroll">
+        <div class="section-heading">
+          <p class="eyebrow">Visualizations</p>
+          <h2>All rendered charts extracted from the PySpark notebook</h2>
+        </div>
+        <div id="chart-gallery" class="chart-grid"></div>
+      </section>
+
+      <section id="ml" class="section animate-on-scroll">
+        <div class="section-heading">
+          <p class="eyebrow">Machine Learning</p>
+          <h2>Training balance, model trials, and feature signals</h2>
+        </div>
+        <div class="split-grid">
+          <article class="card">
+            <div class="card-header">
+              <h3>Class balancing</h3>
+              <p>How the delayed vs on-time split changed before training.</p>
+            </div>
+            <div id="balance-cards" class="mini-metric-grid"></div>
+          </article>
+
+          <article class="card">
+            <div class="card-header">
+              <h3>Model leaderboard</h3>
+              <p>Decision tree, random forest, and gradient boosted tree outputs from the notebook.</p>
+            </div>
+            <div id="model-leaderboard" class="model-list"></div>
+          </article>
+        </div>
+
+        <div class="split-grid">
+          <article class="card">
+            <div class="card-header">
+              <h3>Decision tree tuning trials</h3>
+              <p>Parameter combinations captured directly from the notebook logs.</p>
+            </div>
+            <div class="table-scroll">
+              <table id="dt-table"></table>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-header">
+              <h3>Feature importances</h3>
+              <p>Signals exposed by the tuned decision tree.</p>
+            </div>
+            <div id="feature-bars" class="feature-bars"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section animate-on-scroll">
+        <div class="section-heading">
+          <p class="eyebrow">Featured Outputs</p>
+          <h2>Main analytical tables from the notebook</h2>
+        </div>
+        <div id="featured-tables" class="featured-table-grid"></div>
+      </section>
+
+      <section id="outputs" class="section animate-on-scroll">
+        <div class="section-heading">
+          <p class="eyebrow">Output Explorer</p>
+          <h2>Search every extracted table output</h2>
+        </div>
+        <div class="explorer-toolbar card">
+          <label class="search-label" for="output-search">Filter by title, section, or dataset name</label>
+          <input id="output-search" type="search" placeholder="🔍  Search outputs...">
+          <div id="section-filters" class="chip-row"></div>
+        </div>
+        <div id="output-count" class="output-count"></div>
+        <div id="output-list" class="output-list"></div>
+      </section>
+    </main>
+
+    <footer class="footer-sig">
+      Built with <span>PySpark + Databricks</span> · Flight Delay Analytics Dashboard
+    </footer>
+  </div>
+
+  <script src="site-data.js"></script>
+  <script src="app.js"></script>
+  <script type="module" src="plane-viewer.js"></script>
+</body>
+</html>
